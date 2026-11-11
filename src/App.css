@@ -1082,3 +1082,113 @@ html[data-theme="dark"] .theme-card-info p {
     font-size: 15px;
   }
 }
+
+/* =========================
+   NOTE CARD DROPDOWN
+========================= */
+
+.note-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.note-menu-container {
+  position: relative;
+  display: inline-flex;
+}
+
+.note-menu-button {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: #a69aaa;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.note-menu-button:hover,
+.note-menu-button[aria-expanded="true"] {
+  background: #f8e5f0;
+  color: #c879a3;
+}
+
+.note-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 210px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  background: #fffafd;
+  border: 1px solid #f0dfeb;
+  border-radius: 13px;
+  box-shadow: 0 8px 24px rgba(100, 65, 95, 0.14);
+  z-index: 100;
+  animation: dropdownFade 0.18s ease;
+}
+
+.note-dropdown button {
+  width: 100%;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 11px;
+  border: none;
+  border-radius: 9px;
+  background: transparent;
+  color: #66596b;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.note-dropdown button:hover {
+  background: #f9eaf2;
+  color: #bd7198;
+}
+
+.note-dropdown button svg {
+  flex-shrink: 0;
+}
+
+@keyframes dropdownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* DARK MODE */
+
+html[data-theme="dark"] .note-dropdown {
+  background: #302b3b;
+  border-color: #494153;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+html[data-theme="dark"] .note-dropdown button {
+  color: #eee8f3;
+}
+
+html[data-theme="dark"] .note-dropdown button:hover {
+  background: #494153;
+  color: #f1b5d2;
+}

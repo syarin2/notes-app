@@ -129,6 +129,27 @@ export default function Dashboard() {
     setShowForm(true);
   };
 
+
+const handleToggleFavorite = (id) => {
+  setNotes(prevNotes =>
+    prevNotes.map(note =>
+      note.id === id
+        ? { ...note, pinned: !note.pinned }
+        : note
+    )
+  );
+};
+
+const handleToggleArchive = (id) => {
+  setNotes(prevNotes =>
+    prevNotes.map(note =>
+      note.id === id
+        ? { ...note, archived: !note.archived }
+        : note
+    )
+  );
+};
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -254,8 +275,13 @@ export default function Dashboard() {
         {filteredNotes.length > 0 ? (
           <div className="notes-grid">
             {filteredNotes.map(note => (
-              <NoteCard key={note.id} note={note} />
-            ))}
+            <NoteCard
+              key={note.id}
+              note={note}
+              onToggleFavorite={handleToggleFavorite}
+              onToggleArchive={handleToggleArchive}
+            />
+          ))}
           </div>
         ) : (
           <div className="empty-state">

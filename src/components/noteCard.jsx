@@ -1,9 +1,21 @@
 
-import React from 'react';
-import { Pin, MoreHorizontal } from 'lucide-react';
+import React, { useState } from 'react';
+import {
+  Pin,
+  MoreHorizontal,
+  Star,
+  Archive,
+  ArchiveRestore
+} from 'lucide-react';
 import PropTypes from 'prop-types';
 
-export default function NoteCard({ note }) {
+export default function NoteCard({
+  note,
+  onToggleFavorite,
+  onToggleArchive
+}) {
+  const [showMenu, setShowMenu] = useState(false);
+
   return (
     <article className="note-card">
       <div className="note-card-top">
@@ -13,7 +25,56 @@ export default function NoteCard({ note }) {
 
         <div className="note-card-actions">
           {note.pinned && <Pin size={17} />}
-          <MoreHorizontal size={20} />
+
+          <div className="note-menu-container">
+            <button
+              type="button"
+              className="note-menu-button"
+              onClick={() => setShowMenu(!showMenu)}
+              aria-label="Pilihan catatan"
+              aria-expanded={showMenu}
+            >
+              <MoreHorizontal size={21} />
+            </button>
+
+            {showMenu && (
+              <div className="note-dropdown">
+                <button
+                  type="button"
+                  onClick={() => {
+                    onToggleFavorite(note.id);
+                    setShowMenu(false);
+                  }}
+                >
+                  <Star
+                    size={16}
+                    fill={note.pinned ? 'currentColor' : 'none'}
+                  />
+                  {note.pinned
+                    ? 'Remove from Favorites'
+                    : 'Add to Favorites'}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    onToggleArchive(note.id);
+                    setShowMenu(false);
+                  }}
+                >
+                  {note.archived ? (
+                    <ArchiveRestore size={16} />
+                  ) : (
+                    <Archive size={16} />
+                  )}
+
+                  {note.archived
+                    ? 'Restore to Dashboard'
+                    : 'Move to Archive'}
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
@@ -39,5 +100,7 @@ NoteCard.propTypes = {
     date: PropTypes.string.isRequired,
     pinned: PropTypes.bool,
     archived: PropTypes.bool
-  }).isRequired
+  }).isRequired,
+  onToggleFavorite: PropTypes.func.isRequired,
+  onToggleArchive: PropTypes.func.isRequired
 };
